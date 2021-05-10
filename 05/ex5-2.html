@@ -14,8 +14,8 @@
             doInsert();
         }
 
-        $().ready(function button2Pressed() {
-            WriteSelect();
+        $().ready(function () {
+            setInterval(WriteSelect, 2000);
         });
 
         async function doInsert() {
@@ -57,8 +57,6 @@
     <br>
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
-    <br>
-    <button onclick="button2Pressed()">X</button>
     <hr>
     <p id="result">xxxx</p>
     <hr>
