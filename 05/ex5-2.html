@@ -22,7 +22,7 @@
             var userid = document.getElementById('tf1').value;
             var tweet = document.getElementById('tf2').value;
 
-            var sql = `insert into Tweets (name, tweet, time) values("${userid}", "${tweet}", now());`;
+            var sql = `insert into Tweets (name, tweet, time) values("${userid}", "${tweet}", now())`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
@@ -30,7 +30,7 @@
         }
 
         async function WriteSelect() {
-            var sql = 'select * from Tweets order by time desc';
+            var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
@@ -60,7 +60,7 @@
     <hr>
     <p id="result">xxxx</p>
     <hr>
-    <p id="result"></p>
+    
 
 </body>
 
