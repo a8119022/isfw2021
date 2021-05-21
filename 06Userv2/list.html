@@ -14,10 +14,23 @@
             execSelect();
         });
 
-        async function exeDelete(userid){
-            var sql = `delete from Users where id = "${userid}";`;
-            var objects = await osql.connect(sql);
-            console.log(objects);
+        async function exeDelete(userid){ // ボタンを押して消えるパターン
+            var ans = window.confirm('削除してもよろしいでしょうか？');
+            if(ans == true){
+                var sql = `delete from Users where id = "${userid}";`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+            }
+        }
+
+        async function execDelete(){ //入力して消すパターン
+            var name = document.getElementById('idname').value;
+            var ans = window.confirm('削除してもよろしいでしょうか？');
+            if(ans == true){
+                var sql = `delete from Users where id = "${name}";`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+            }
         }
 
         
@@ -45,6 +58,8 @@
 
 <body>
     <h1>Users</h1>
+    ID:<input id="idname" type="text">
+    <button onclick="execDelete()">削除</button>
     <p id="result">xxxx</p>
 </body>
 
