@@ -14,14 +14,16 @@
             execSelect();
         });
 
-        async function exeFollow(userid){
+        async function exeFollow(userid,username){
+            var ans = window.confirm(username + 'さんをフォローしました');
             var loginuserid = sessionStorage.getItem('userid');
             var sql = `insert into Follows (fromid,toid) values ("${loginuserid}","${userid}");`;
             var objects = await osql.connect(sql);
             console.log(objects);
         }
 
-        async function exeNotFollow(userid){
+        async function exeNotFollow(userid,username){
+            var ans = window.confirm(username + 'フォロー解除しました');
             var loginid = sessionStorage.getItem('userid');
             var sql = `delete from Follows where fromid = "${loginid}" and toid = "${userid}";`; //andを入れることで条件を複数入れることができる
             var objects = await osql.connect(sql);
@@ -40,8 +42,8 @@
                 var object = objects[i];
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + `<button onclick = "exeFollow('${object.id}')">フォロー</button>` + '</td>'; //object.idは相手のid
-                html = html + '<td>' + `<button onclick = "exeNotFollow('${object.id}')">フォロー解除</button>` + '</td>';
+                html = html + '<td>' + `<button onclick = "exeFollow('${object.id}','${object.name}')">フォロー</button>` + '</td>'; //object.idは相手のid
+                html = html + '<td>' + `<button onclick = "exeNotFollow('${object.id}','${object.name}')">フォロー解除</button>` + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
