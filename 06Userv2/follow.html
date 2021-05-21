@@ -14,14 +14,22 @@
             execSelect();
         });
 
-        async function exeDelete(userid){
-            var sql = `delete from Users where id = "${userid}";`;
+        async function exeFollow(userid){
+            var loginuserid = sessionStorage.getItem('userid');
+            var sql = `insert into Follows (fromid,toid) values ("${loginuserid}","${userid}");`;
             var objects = await osql.connect(sql);
             console.log(objects);
         }
 
-        
-        async function execSelect() {
+        async function exeNotFollow(userid){
+            var loginid = sessionStorage.getItem('userid');
+            var sql = `delete from Follows where fromid = "${loginid}" and toid = "${userid}";`; //andを入れることで条件を複数入れることができる
+            var objects = await osql.connect(sql);
+            console.log(objects);
+        }
+
+
+        async function execSelect(){
             var sql = 'select * from Users';
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -32,8 +40,8 @@
                 var object = objects[i];
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + '<a href="update.html?userid=' + object.id + '">変更</a>' + '</td>';
-                html = html + '<td>' + `<button onclick = "exeDelete('${object.id}')">削除</button>` + '</td>';  
+                html = html + '<td>' + `<button onclick = "exeFollow('${object.id}')">フォロー</button>` + '</td>'; //object.idは相手のid
+                html = html + '<td>' + `<button onclick = "exeNotFollow('${object.id}')">フォロー解除</button>` + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -44,7 +52,7 @@
 </head>
 
 <body>
-    <h1>Users</h1>
+    <h1>アカウント一覧</h1>
     <p id="result">xxxx</p>
 </body>
 
