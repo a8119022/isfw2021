@@ -10,6 +10,19 @@
     <script type="text/javascript" src="../osql.js"></script>
 
     <script>
+        $().ready(function (){
+            login();
+            var userid = sessionStorage.getItem('userid');
+            console.log(userid);
+            document.getElementById('update').innerHTML = '<a href="update.html?userid=' + userid + '">ユーザ情報変更</a>';
+            //innerHTMLが空の状態になっている。htmlを読み込んでから実行したいときはここに入れる。そうすると読み込んだ後実行される。
+        });
+
+        function login(){
+            var name = sessionStorage.getItem('username');
+            console.log(name);
+            document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん';
+        }
     </script>
 
 </head>
@@ -18,6 +31,10 @@
     <h1>ユーザトップ</h1>
     <p id="welcome">ようこそxxさん</p>
     <hr>
+    <p id="update">ユーザ情報変更</p>
+    <a href="tweet.html">Tweets</a>
+    <hr>
+    <a href="follow.html">フォロー一覧</a>
 
 </body>
 

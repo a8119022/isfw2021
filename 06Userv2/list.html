@@ -14,6 +14,26 @@
             execSelect();
         });
 
+        async function exeDelete(userid){ // ボタンを押して消えるパターン
+            var ans = window.confirm('削除してもよろしいでしょうか？');
+            if(ans == true){
+                var sql = `delete from Users where id = "${userid}";`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+            }
+        }
+
+        async function execDelete(){ //入力して消すパターン
+            var name = document.getElementById('idname').value;
+            var ans = window.confirm('削除してもよろしいでしょうか？');
+            if(ans == true){
+                var sql = `delete from Users where id = "${name}";`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+            }
+        }
+
+        
         async function execSelect() {
             var sql = 'select * from Users';
             var objects = await osql.connect(sql);
@@ -26,6 +46,7 @@
                 html = html + '<td>' + object.id + '</td>';
                 html = html + '<td>' + object.name + '</td>';
                 html = html + '<td>' + '<a href="update.html?userid=' + object.id + '">変更</a>' + '</td>';
+                html = html + '<td>' + `<button onclick = "exeDelete('${object.id}')">削除</button>` + '</td>';  
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -37,6 +58,8 @@
 
 <body>
     <h1>Users</h1>
+    ID:<input id="idname" type="text">
+    <button onclick="execDelete()">削除</button>
     <p id="result">xxxx</p>
 </body>
 

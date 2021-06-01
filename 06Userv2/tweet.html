@@ -15,13 +15,14 @@
         }
 
         $().ready(function () {
+            var username = sessionStorage.getItem('username');
+            document.getElementById('tf1').value = username;
             setInterval(WriteSelect, 2000);
         });
 
         async function doInsert() {
             var userid = document.getElementById('tf1').value;
             var tweet = document.getElementById('tf2').value;
-
             var sql = `insert into Tweets (name, tweet, time) values("${userid}", "${tweet}", now())`;
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -53,7 +54,7 @@
 <body>
     <h1>Tweets</h1>
     <br>
-    名前:<input id="tf1" value="名無し" type="textfield">
+    名前:<input id="tf1" type="textfield">
     <br>
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
